@@ -63,6 +63,10 @@ th{font-weight:600;color:var(--muted);text-align:start;padding:4px 0;font-size:.
 td{padding:7px 0;border-top:1px solid var(--line)}
 td.r,th.r{text-align:end}
 .pos{color:var(--income)} .neg{color:var(--danger)}
+.wk{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:8px;padding:9px 0;border-top:1px solid var(--line);align-items:center}
+.wk.head{border-top:0;padding-top:0;color:var(--muted);font-size:.85rem;font-weight:600}
+.wk > span:not(:first-child){text-align:center}
+.pos{color:var(--income)} .neg{color:var(--danger)}
 .list{list-style:none;margin:0;padding:0}
 .list li button{width:100%;text-align:start;background:none;border:0;border-top:1px solid var(--line);padding:10px 0;color:var(--ink);cursor:pointer;font-family:inherit;font-size:1rem;display:flex;justify-content:space-between;gap:10px;align-items:center}
 .list li:first-child button{border-top:0}
@@ -216,9 +220,9 @@ function renderWeeks(){
   });
   const rows = Object.keys(w).sort().map(s=>{
     const net = w[s].inc - w[s].fuel;
-    return `<tr><td>من ${short(s)}</td><td class="r num">${fmt(w[s].inc)}</td><td class="r num">${fmt(w[s].fuel)}</td><td class="r num ${net<0?'neg':'pos'}">${fmt(net)}</td></tr>`;
+    return `<div class="wk"><span>من <span class="num">${short(s)}</span></span><span class="num">${fmt(w[s].inc)}</span><span class="num">${fmt(w[s].fuel)}</span><span class="num ${net<0?'neg':'pos'}">${fmt(net)}</span></div>`;
   }).join('');
-  $('weeks').innerHTML = `<table><thead><tr><th>الأسبوع</th><th class="r">إيراد</th><th class="r">بنزين</th><th class="r">فائض</th></tr></thead><tbody>${rows}</tbody></table>`;
+  $('weeks').innerHTML = `<div class="wk head"><span>الأسبوع</span><span>إيراد</span><span>بنزين</span><span>فائض</span></div>${rows}`;
 }
 
 function renderList(){
